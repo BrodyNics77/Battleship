@@ -10,4 +10,8 @@ class Ship
     def health
         @length
     end
+
+    def sunk?
+        false
+    end
 end
