@@ -18,7 +18,7 @@ RSpec.describe 'Ship' do
         expect(@cruiser.length).to eq(3)
     end
     
-    describe 'Ship health' do
+    describe 'health' do
         it 'exists' do
             expect(@cruiser.health).to eq(3)
         end
@@ -31,6 +31,19 @@ RSpec.describe 'Ship' do
             @cruiser.hit
 
             expect(@cruiser.health).to eq(2)
+        end
+        
+        it 'wont be sunk if health is over 0' do
+            @cruiser.hit
+            @cruiser.hit
+
+            expect(@cruiser.health).to eq(1)
+            expect(@cruiser.sunk?).to eq false
+
+            @cruiser.hit
+
+            expect(@cruiser.health).to eq(0)
+            expect(@cruiser.sunk?).to eq true
         end
     end
 end
