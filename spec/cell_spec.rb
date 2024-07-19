@@ -26,8 +26,18 @@ RSpec.describe 'Cell' do
         it 'is empty when nil' do
             @cell.empty?
             expect(@cell.empty?).to be true
-        # cruiser = Ship.new("Cruiser", 3)
+       
+        end
+
+        it 'can place a ship' do
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell.place_ship(@cruiser)
+
+            expect(@cell.ship).to eq(@cruiser)
+            expect(@cell.empty?).to be false
         end
         
+
+
     end
 end
