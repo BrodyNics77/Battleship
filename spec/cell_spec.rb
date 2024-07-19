@@ -23,13 +23,13 @@ RSpec.describe 'Cell' do
         expect(@cell.ship).to eq nil
         end
 
-        it 'is empty when nil' do
+        it '#empty? when nil' do
             @cell.empty?
             expect(@cell.empty?).to be true
        
         end
 
-        it 'can place a ship' do
+        it '#can place_ship' do
             @cruiser = Ship.new("Cruiser", 3)
             @cell.place_ship(@cruiser)
 
@@ -37,7 +37,29 @@ RSpec.describe 'Cell' do
             expect(@cell.empty?).to be false
         end
         
-
-
     end
+
+    describe 'ship fired upon' do
+        it '#fired_upon? default is false' do
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell.place_ship(@cruiser)
+
+            expect(@cell.fired_upon?).to be false
+        
+        end
+
+        it '#fired_upon? ship loses health' do
+        @cruiser = Ship.new("Cruiser", 3)
+        @cell.place_ship(@cruiser)
+        @cell.fired_upon
+
+        expect(@cell.fired_upon?).to be true
+        expect(@cell.ship.health).to eq(2)
+    
+    end
+
+
+        
+    end
+
 end

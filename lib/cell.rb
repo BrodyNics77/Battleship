@@ -18,4 +18,18 @@ class Cell
         @ship = ship
     end
 
+    def fired_upon
+        @ship.hit 
+    end
+
+    def fired_upon?
+        if @ship.health == @ship.length
+            false
+        else true
+
+        end
+    end
+
+   
+
 end
