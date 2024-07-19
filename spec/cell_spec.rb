@@ -55,11 +55,12 @@ RSpec.describe 'Cell' do
 
         expect(@cell.fired_upon?).to be true
         expect(@cell.ship.health).to eq(2)
-    
+        end
     end
-
-
-        
+    describe '#can render' do
+        it '#can render displays . by default' do
+        @cell_1 = Cell.new("B4")
+        expect(@cell_1.render).to eq(".")
+        end
     end
-
 end

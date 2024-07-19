@@ -30,6 +30,10 @@ class Cell
         end
     end
 
+    def render
+        return "."
+    end
+
    
 
 end
