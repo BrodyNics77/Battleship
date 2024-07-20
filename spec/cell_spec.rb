@@ -39,7 +39,7 @@ RSpec.describe 'Cell' do
         
     end
 
-    describe 'ship fired upon' do
+    describe 'ship fire upon' do
         it '#fired_upon? default is false' do
             @cruiser = Ship.new("Cruiser", 3)
             @cell.place_ship(@cruiser)
@@ -48,18 +48,79 @@ RSpec.describe 'Cell' do
         
         end
 
+        it 'can be #fired_upon' do
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell.place_ship(@cruiser)
+            @cell.fire_upon
+
+            expect(@cell.ship)
+        end
+
         it '#fired_upon? ship loses health' do
-        @cruiser = Ship.new("Cruiser", 3)
-        @cell.place_ship(@cruiser)
-        @cell.fired_upon
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell.place_ship(@cruiser)
+            @cell.fire_upon
 
-        expect(@cell.fired_upon?).to be true
-        expect(@cell.ship.health).to eq(2)
+            expect(@cell.fired_upon?).to be true
+            expect(@cell.ship.health).to eq(2)
+        end
+    end
+    describe '#render' do
+        it 'displays . by default' do
+            @cell_1 = Cell.new("B4")
+
+            expect(@cell_1.render).to eq(".")
+        end
+        it 'displays m when there is a missed' do
+            @cell_1 = Cell.new("B4")
+            
+            @cell_1.fire_upon
+
+            expect(@cell_1.render).to eq("M")
+        end
+        it '#displays S when there is a ship on the cell' do
+            @cell_2 = Cell.new("A3")
+
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell_2.place_ship(@cruiser)
+
+            expect(@cell_2.render(true)).to eq("S")
+        end
+        it '#displays H when the ship is hit' do
+            @cell_2 = Cell.new("A3")
+
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell_2.place_ship(@cruiser)
+
+            @cell_2.fire_upon
+            
+            expect(@cell_2.ship.health).to eq(2)
+            expect(@cell_2.render).to eq("H")
+        end
     
+        it '#displays if ship has been sunk' do
+            @cruiser = Ship.new("Cruiser", 3)
+
+            expect(@cruiser.sunk?).to be false
+
+            @cruiser.hit
+            @cruiser.hit
+            @cruiser.hit
+
+            expect(@cruiser.sunk?).to eq true
+        end
+        it '#displays X if the ship has been sunk' do
+            @cell_2 = Cell.new("A3")
+            @cruiser = Ship.new("Cruiser", 3)
+
+            @cell_2.place_ship(@cruiser)
+
+            @cell_2.fire_upon
+            @cruiser.hit
+            @cruiser.hit
+
+            expect(@cruiser.sunk?).to eq true
+            expect(@cell_2.render).to eq("X")
+        end
     end
-
-
-        
-    end
-
 end

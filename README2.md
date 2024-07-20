@@ -1,3 +1,5 @@
+# Iteration 2 - The Board
+
 Test Driven Development
 In this iteration, you are required to use TDD to create your classes. Use the interaction pattern to determine what a method should do and write one or more tests to verify that expected behavior. Then you can implement the method. You should always write code with the purpose of making a test pass.
 
@@ -6,15 +8,15 @@ The Board class is responsible for keeping track of cells, validating coordinate
 
 The Cells
 The board is responsible for keeping track of all the cells. Since our board is 4 x 4, it will have 16 Cell objects. It will keep track of these cells in a hash where the coordinates of the cell are the keys that point to Cell objects:
-
+----------------------------------------------------------------------------------------------------------------
 pry(main)> require './lib/board'
-# => true
+.# => true
 
 pry(main)> board = Board.new
-# => #<Board:0x00007ff0728c8010...>
+.# => #<Board:0x00007ff0728c8010...>
 
 pry(main)> board.cells
-# =>
+.# =>
 {
  "A1" => #<Cell:0x00007ff0728a3f58...>,
  "A2" => #<Cell:0x00007ff0728a3ee0...>,
@@ -33,8 +35,9 @@ pry(main)> board.cells
  "D3" => #<Cell:0x00007ff0728a38c8...>,
  "D4" => #<Cell:0x00007ff0728a3850...>
 }
-Testing the #cells method is a bit tricky because the Cell objects are created in the Board class and not in our tests. We can’t specify exactly what the return value should be because we don’t have reference to the exact cell objects we expect in the hash. Instead, we can assert what we do know about this hash. It’s a hash, it should have 16 key/value pairs, and those keys point to cell objects.
 
+Testing the #cells method is a bit tricky because the Cell objects are created in the Board class and not in our tests. We can’t specify exactly what the return value should be because we don’t have reference to the exact cell objects we expect in the hash. Instead, we can assert what we do know about this hash. It’s a hash, it should have 16 key/value pairs, and those keys point to cell objects.
+-----------------------------------------------------------------------------------------------------------------
 Validating Coordinates
 Our board should be able to tell us if a coordinate is on the board or not:
 
@@ -52,6 +55,7 @@ pry(main)> board.valid_coordinate?("E1")
 
 pry(main)> board.valid_coordinate?("A22")
 # => false
+------------------------------------------------------------------------------------------------------------------
 Validating Placements
 Additionally, a Board should be able to tell us if a placement for a ship is valid or not. Our Board should have a method called valid_placement? that takes two arguments: a Ship object and an array of Coordinates.
 
@@ -253,6 +257,7 @@ You can format strings on multiple lines using concatenation to make them more r
 "B . . . . \n" +
 "C . . . . \n" +
 "D . . . . \n"
+
 As you move forward, you will need to add functionality to your game so that you can fire on Cells and damage their Ships. When you do this, you should also add new tests for your render method that it can render with Hits, Misses, and Sunken Ships. A Board in the middle of a game might be rendered as something like this:
 
 "  1 2 3 4 \n" +
@@ -266,3 +271,5 @@ As you move forward, you will need to add functionality to your game so that you
 "B . . . M \n" +
 "C X . . . \n" +
 "D X . . . \n"
+
+### Brody notes, needs more spacing and readablity 
