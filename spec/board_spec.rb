@@ -14,24 +14,20 @@ RSpec.describe 'Board' do
         expect(@board).to be_a(Board)
     end
 
-    it 'has cells stored in a hash' do
+    it 'has cells stored as a hash' do
         expect(@board.cells).to be_a(Hash)
     end
 
     it 'has a total of 16 key/value pairs in the hash' do
         @board.cells
 
+        expect(@board.cells.size).to eq(16)
+    end
+
+    xit 'cells have key/val pair as coordinate strings' do
+        @board.cells
+
         expect(@board.cells).to eq()
-    end
-
-    it 'has the cells keys as coordinate strings' do
-        @board.cells
-
-    end
-
-    it 'has the values as cell objects' do
-        @board.cells
-
     end
 
 
