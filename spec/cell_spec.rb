@@ -70,7 +70,7 @@ RSpec.describe 'Cell' do
 
             expect(@cell_1.render).to eq("M")
         end
-        it '#displays S' do
+        it '#displays S if cell has ship' do
             @cell_2 = Cell.new("A3")
 
             @cruiser = Ship.new("Cruiser", 3)
@@ -78,7 +78,7 @@ RSpec.describe 'Cell' do
 
             expect(@cell_2.render(true)).to eq("S")
         end
-        it '#displays H' do
+        it '#displays H if ship has been hit' do
             @cell_2 = Cell.new("A3")
 
             @cruiser = Ship.new("Cruiser", 3)
@@ -88,6 +88,30 @@ RSpec.describe 'Cell' do
             
             expect(@cell_2.ship.health).to eq(2)
             expect(@cell_2.render).to eq("H")
+        end
+        it '#displays if ship has been sunk' do
+            @cruiser = Ship.new("Cruiser", 3)
+
+            expect(@cruiser.sunk?).to be false
+            
+            @cruiser.hit 
+            @cruiser.hit
+            @cruiser.hit
+
+           expect(@cruiser.sunk?).to eq true
+        end
+        it '#displays X if the ship has been sunk' do
+            @cell_2 = Cell.new("A3")
+
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell_2.place_ship(@cruiser)
+
+            @cell_2.fire_upon
+            @cruiser.hit
+            @cruiser.hit
+
+            expect(@cruiser.sunk?).to eq true
+            expect(@cell_2.render).to eq("X")
         end
     end
 end

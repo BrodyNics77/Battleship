@@ -40,14 +40,21 @@ class Cell
        if reveal == true
             return "S"
         end
-       if @hit == false
-            return "."
-       elsif @hit == true
+        if @hit == false
+        return "."
+        elsif place_ship(@ship)
+        @ship.hit == true && ship.sunk == true
+            "X"
+        elsif place_ship(@ship) 
+            @ship.hit == true
             return "H"
-       else
-            return "M"
+      #  elsif place_ship(@ship)
+       #     @ship.hit == true && ship.sunk == true
+          #  @ship.sunk == true
+            #return "X"
+        else
+        return "M"
         end
     end
 end
-
-# @hit == true return H
+# ^change later^
