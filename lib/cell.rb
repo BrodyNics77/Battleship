@@ -1,6 +1,6 @@
 class Cell
 
-    attr_reader :coordinate, :ship
+    attr_reader :coordinate, :ship, :hit
 
     def initialize(coordinate)
         @coordinate = coordinate
@@ -19,6 +19,13 @@ class Cell
         @ship = ship
     end
 
+    def fire_upon 
+        if empty? == true
+            @hit = true
+        else
+            @ship.hit
+            @hit = true
+        end
     def fire_upon
         if empty? == true
             @hit = true
@@ -35,12 +42,6 @@ class Cell
         end
     end
 
-   def render
-        if @hit == false
-            return "."
-        else
-            return "M"
-        end
-   end
+   
 
 end
