@@ -36,23 +36,18 @@ class Cell
         end
     end
 
-    def render
-        if @hit == false
+    def render(reveal = false)
+       if reveal == true
+            return "S"
+        end
+       if @hit == false
             return "."
-        else
+       elsif @hit == true
+            return "H"
+       else
             return "M"
         end
     end
 end
 
-#def render(reveal = false)
- #   if @fired_upon
-  #  if @ship
-   # @ship.sunk? ? "X" : "H"
-   # else
-   # "M"
-   # end
-   # elsif reveal && @ship"S"
-   # else"."
-   # end
-   # end
+# @hit == true return H
