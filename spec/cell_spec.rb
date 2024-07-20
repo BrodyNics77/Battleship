@@ -114,7 +114,7 @@ RSpec.describe 'Cell' do
             @cruiser = Ship.new("Cruiser", 3)
 
             @cell_2.place_ship(@cruiser)
-            
+
             @cell_2.fire_upon
             @cruiser.hit
             @cruiser.hit

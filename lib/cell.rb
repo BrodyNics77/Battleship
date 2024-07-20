@@ -36,25 +36,23 @@ class Cell
     end
 
     def render(reveal = false)
-        if reveal == true
+        default = "."
+        if reveal == true  && @hit == false && empty? == false
             return "S"
         end
+
         if @hit == false
-            "."
+            return default
 
-        elsif place_ship(@ship)
-            @ship.hit
-            @ship.hit == true && @ship.sunk? == false
-            "H"
-
-        elsif place_ship(@ship)
-            @ship.hit
-            @ship.sunk? == true && @ship.hit == true
-            "X"
-
-        else
+        elsif @ship
+            if @ship.sunk? == true
+                return "X"
+            else
+                return "H"
+            end
+            
+        else 
             return "M"
         end
-     end
-
+    end
 end
