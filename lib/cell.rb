@@ -26,22 +26,35 @@ class Cell
             @ship.hit
             @hit = true
         end
-    def fire_upon
-        if empty? == true
-            @hit = true
-        else 
-            @ship.hit
-        end
     end
 
     def fired_upon?
         if @ship.health == @ship.length
-            false
+        false
         else true
-
         end
     end
 
-   
+    def render(reveal = false)
+        if reveal == true
+            return "S"
+        end
+        if @hit == false
+            "."
+
+        elsif place_ship(@ship)
+            @ship.hit
+            @ship.hit == true && @ship.sunk? == false
+            "H"
+
+        elsif place_ship(@ship)
+            @ship.hit
+            @ship.sunk? == true && @ship.hit == true
+            "X"
+
+        else
+            return "M"
+        end
+     end
 
 end
