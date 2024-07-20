@@ -48,18 +48,39 @@ RSpec.describe 'Cell' do
         
         end
 
-        it '#fired_upon? ship loses health' do
-        @cruiser = Ship.new("Cruiser", 3)
-        @cell.place_ship(@cruiser)
-        @cell.fired_upon
+        it 'can be #fired_upon' do
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell.place_ship(@cruiser)
+            @cell.fire_upon
 
-        expect(@cell.fired_upon?).to be true
-        expect(@cell.ship.health).to eq(2)
-    
+            expect(@cell.ship)
+        end
+
+        it '#fired_upon? ship loses health' do
+            @cruiser = Ship.new("Cruiser", 3)
+            @cell.place_ship(@cruiser)
+            @cell.fire_upon
+
+            expect(@cell.fired_upon?).to be true
+            expect(@cell.ship.health).to eq(2)
+        end
     end
 
+    describe '#render' do
+        it 'displays . by default' do
+            @cell_1 = Cell.new("B4")
 
-        
+            expect(@cell_1.render).to eq(".")
+        end
+
+        it 'displays m when there is a miss' do
+            @cell_1 = Cell.new("B4")
+
+            @cell_1.fire_upon
+
+            expect(@cell_1.render).to eq("M")
+        end
+
     end
 
 end
