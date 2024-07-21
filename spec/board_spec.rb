@@ -18,18 +18,20 @@ RSpec.describe 'Board' do
         expect(@board.cells).to be_a(Hash)
     end
 
-    it 'has a total of 16 key/value pairs in the hash' do
-        @board.cells
-
-        expect(@board.cells.size).to eq(16)
+    describe 'validating coordinates' do
+        it 'has a total of 16 key/value pairs in the hash' do
+            expect(@board.cells.size).to eq(16)
+        end
+    
+        it 'cells have key/val pair as coordinate strings' do
+            expect(@board.valid_coordinate?("A1")).to be true
+            expect(@board.valid_coordinate?("D1")).to be true
+            expect(@board.valid_coordinate?("A5")).to be false
+            expect(@board.valid_coordinate?("E1")).to be false
+            expect(@board.valid_coordinate?("A22")).to be false
+        end
+        
     end
-
-    xit 'cells have key/val pair as coordinate strings' do
-        @board.cells
-
-        expect(@board.cells).to eq()
-    end
-
 
 end
 # The Board class is responsible for keeping track of cells, 
