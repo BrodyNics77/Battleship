@@ -31,8 +31,20 @@ class Board
         @cells.key?(coordinate)
     end
 
-    def valid_placement?()
+    def valid_placement?(ship, coordinates)
+        if coordinates.length != ship.length
+            return false
+        end
+        
+        (1..4).each_cons(3) { |a| p a }
+        coord_letters = ["A", "B", "C", "D"]
+        coord__nums = ["1", "2", "3", "4"]
+        if 
 
+        end
     end
-
+#range of the ship in the grid must be each consecutive
+# numbers can all be the same and letters can increment
+# each cons goes through range and goes through all the possible spots it will fit.
+# seperate coordinates into 2 arrays.  check if sequential/uniq
 end
