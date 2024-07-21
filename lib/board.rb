@@ -41,6 +41,7 @@ class Board
     def length_check?(ship, coordinates)
         coordinates.length == ship.length
 
+        end
     end
 
     def consecutive_checker(coordinates)
