@@ -33,12 +33,28 @@ RSpec.describe 'Board' do
     end
 
     describe 'validating ship placements' do
-        xit '#valid_placement? of a ships length' do
+        it '#valid_placement? test for false values of a ships length' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.length_check?(cruiser, ["A1", "A2"])).to be false
+            expect(@board.length_check?(submarine, ["A2", "A3", "A4"])).to be false
+        end
+
+        it '#valid_placement? test for false values of a ships length' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
             expect(@board.valid_placement?(cruiser, ["A1", "A2"])).to be false
             expect(@board.valid_placement?(submarine, ["A2", "A3", "A4"])).to be false
+        end
+
+        it '#valid_placement? test for true values of ship length' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to be true
+            expect(@board.valid_placement?(submarine, ["A2", "A3"])).to be true
         end
 
         xit '#valid_placement? of consecutive coordinates' do
@@ -72,7 +88,7 @@ RSpec.describe 'Board' do
         xit '#place ship on coordinates' do
             cruiser = Ship.new("Cruiser", 3)
             board.place(cruiser, ["A1", "A2", "A3"])
-            
+
             cell_1 = board.cells["A1"]
             cell_2 = board.cells["A2"]
             cell_3 = board.cells["A3"]

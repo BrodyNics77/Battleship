@@ -23,7 +23,7 @@ class Board
             "D1" => Cell.new('D1'),
             "D2" => Cell.new('D2'),
             "D3" => Cell.new('D3'),
-            "D4" => Cell.new('D4'),
+            "D4" => Cell.new('D4')
         }
     end
 
@@ -31,8 +31,30 @@ class Board
         @cells.key?(coordinate)
     end
 
-    def valid_placement?()
+    def valid_placement?(ship, coordinates)
+        return false if !length_check?(ship, coordinates)
+        return false if !consecutive_checker(coordinates)
+        true
 
     end
+       
+    def length_check?(ship, coordinates)
+        coordinates.length == ship.length
+
+    end
+
+    def consecutive_checker(coordinates)
+        letters = coordinates.map {|coordinate| coordinate[0]} 
+        numbers = coordinates.map {|coordinate| coordinate[1]}
+
+        if letters.uniq.count == 1
+            true
+        elsif numbers.uniq.count == 1
+            true
+        else
+            false
+        end
+    end
+            
 
 end
