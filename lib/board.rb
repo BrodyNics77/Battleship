@@ -33,8 +33,8 @@ class Board
 
     def valid_placement?(ship, coordinates)
         return false if !length_check?(ship, coordinates)
-        return false if !consecutive_checker?(coordinates)
-        return false if !consecutive_accumulator?(coordinates)
+        return false if !unique_checker?(coordinates)
+        return false if !consecutive_numbers?(coordinates)
         true
     end
 
@@ -42,10 +42,9 @@ class Board
         coordinates.length == ship.length
     end
 
-    def consecutive_checker?(coordinates)
-        letters = coordinates.each {|coordinate| coordinate[0]} 
-        numbers = coordinates.each {|coordinate| coordinate[1]}
-        require 'pry'; binding.pry
+    def unique_checker?(coordinates)
+        letters = coordinates.map {|coordinate| coordinate[0]} 
+        numbers = coordinates.map {|coordinate| coordinate[1]}
         if letters.uniq.count == 1
             true
         elsif numbers.uniq.count == 1
@@ -55,27 +54,22 @@ class Board
         end
     end
 
-    def consecutive_accumulator?(coordinates)
+    def consecutive_numbers?(coordinates)
         numbers = coordinates.map {|coordinate| coordinate[1]}
-        numbers.each.any? {|number| number == number + 1}            
+        numbers.each_cons(2).all? do |num_1, num_2| 
+            num_2.to_i == num_1.to_i + 1
+        end
     end
 
-    def coordinate_generator
-        []
+    def consecutive_letters?(coordinates)
+        letters = coordinates.map {|coordinate| coordinate[0]}
+        letters.each_cons(2).all? do |a, b| 
+            # require'pry'; binding.pry
+            b.ord == a.ord + 1
+        end
     end
+
 # try out each_cons.  test unit and integration tests(w/helper tests) seperately
 # make a describe for each helper method.  for organization sake
+# what if we wanna go in the other directions
 end
-
-# def consecutive_checker?(coordinates)
-#     letters = coordinates.map {|coordinate| coordinate[0]} 
-#     numbers = coordinates.map {|coordinate| coordinate[1]}
-
-#     if letters.uniq.count == 1
-#         true
-#     elsif numbers.uniq.count == 1
-#         true
-#     else
-#         false
-#     end
-# end

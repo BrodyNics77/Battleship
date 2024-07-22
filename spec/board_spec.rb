@@ -49,22 +49,38 @@ RSpec.describe 'Board' do
             expect(@board.length_check?(submarine, ["A2", "A3"])).to be true
         end
 
-        it '#consecutive_checker? tests false if coordinates are not consecutive' do
+        it '#unique_checker? tests false if coordinates are not consecutive' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
-            expect(@board.consecutive_checker?(["A1", "A2", "A4"])).to be false
-            expect(@board.consecutive_checker?(["A1", "A3"])).to be false
+            expect(@board.unique_checker?(["B1", "A3"])).to be false
         end
 
-        it '#consecutive_checker? tests true if coordinates are consecutive' do
+        it '#unique_checker? tests true if letters are sequential' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
-            expect(@board.consecutive_checker?(["A1", "A2", "A3"])).to be true
-            expect(@board.consecutive_checker?(["A1", "A2"])).to be true
+            expect(@board.unique_checker?(["A1", "A2", "A3"])).to be true
+            expect(@board.unique_checker?(["A1", "A2"])).to be true
+            expect(@board.unique_checker?(["B1", "C1"])).to be true
+            expect(@board.unique_checker?(["A1", "A2", "A4"])).to be true
         end
 
+        it '#consecutive numbers tests false when number isnt sequential' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.consecutive_numbers?(["A1", "A2", "A4"])).to be false
+            expect(@board.consecutive_numbers?(["A1", "C1"])).to be false
+        end
+
+        it '#consecutive numbers tests true when numbers are sequential' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.consecutive_numbers?(["A1", "A2", "A3"])).to be true
+            expect(@board.consecutive_numbers?(["A1", "A2"])).to be true
+        end
     end
 
     describe '#validating_placements' do
