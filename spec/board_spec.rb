@@ -57,7 +57,7 @@ RSpec.describe 'Board' do
             expect(@board.valid_placement?(submarine, ["A2", "A3"])).to be true
         end
 
-        xit '#valid_placement? of consecutive coordinates' do
+        it '#valid_placement? of consecutive coordinates' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 

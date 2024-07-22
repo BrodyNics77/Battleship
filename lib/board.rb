@@ -33,18 +33,16 @@ class Board
 
     def valid_placement?(ship, coordinates)
         return false if !length_check?(ship, coordinates)
-        return false if !consecutive_checker(coordinates)
+        return false if !consecutive_checker?(coordinates)
+        return false if !consecutive_accumulator?(coordinates)
         true
-
     end
        
     def length_check?(ship, coordinates)
         coordinates.length == ship.length
-
-        end
     end
 
-    def consecutive_checker(coordinates)
+    def consecutive_checker?(coordinates)
         letters = coordinates.map {|coordinate| coordinate[0]} 
         numbers = coordinates.map {|coordinate| coordinate[1]}
 
@@ -56,6 +54,10 @@ class Board
             false
         end
     end
-            
+
+    def consecutive_accumulator?(coordinates)
+        numbers = coordinates.map {|coordinate| coordinate[1]}
+        numbers.each.any? {|number| number == number + 1.to_s}            
+    end
 
 end
