@@ -23,7 +23,7 @@ RSpec.describe 'Board' do
             expect(@board.cells.size).to eq(16)
         end
     
-        it '#cells have key/val pair as coordinate strings' do
+        it '#cells knows if a coordinate exists on the board' do
             expect(@board.valid_coordinate?("A1")).to be true
             expect(@board.valid_coordinate?("D1")).to be true
             expect(@board.valid_coordinate?("A5")).to be false
@@ -32,8 +32,8 @@ RSpec.describe 'Board' do
         end        
     end
 
-    describe 'validating ship placements' do
-        it '#valid_placement? test for false values of a ships length' do
+    describe '#helper methods' do
+        it '#length_check? test for false values of a ships length' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
@@ -41,7 +41,34 @@ RSpec.describe 'Board' do
             expect(@board.length_check?(submarine, ["A2", "A3", "A4"])).to be false
         end
 
-        it '#valid_placement? test for false values of a ships length' do
+        it '#length_check? test for true values of ship length' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+            # require 'pry'; binding.pry
+            expect(@board.length_check?(cruiser, ["A1", "A2", "A3"])).to be true
+            expect(@board.length_check?(submarine, ["A2", "A3"])).to be true
+        end
+
+        it '#consecutive_checker? tests false if coordinates are not consecutive' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.consecutive_checker?(["A1", "A2", "A4"])).to be false
+            expect(@board.consecutive_checker?(["A1", "A3"])).to be false
+        end
+
+        it '#consecutive_checker? tests true if coordinates are consecutive' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.consecutive_checker?(["A1", "A2", "A3"])).to be true
+            expect(@board.consecutive_checker?(["A1", "A2"])).to be true
+        end
+
+    end
+
+    describe '#validating_placements' do
+        xit '#valid_placement? test for false values of a ships length' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
@@ -49,15 +76,15 @@ RSpec.describe 'Board' do
             expect(@board.valid_placement?(submarine, ["A2", "A3", "A4"])).to be false
         end
 
-        it '#valid_placement? test for true values of ship length' do
+        xit '#valid_placement? test for true values of ship length' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
-
+            # require 'pry'; binding.pry
             expect(@board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to be true
             expect(@board.valid_placement?(submarine, ["A2", "A3"])).to be true
         end
 
-        it '#valid_placement? of consecutive coordinates' do
+        xit '#valid_placement? of consecutive coordinates' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 

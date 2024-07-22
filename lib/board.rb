@@ -37,15 +37,15 @@ class Board
         return false if !consecutive_accumulator?(coordinates)
         true
     end
-       
+
     def length_check?(ship, coordinates)
         coordinates.length == ship.length
     end
 
     def consecutive_checker?(coordinates)
-        letters = coordinates.map {|coordinate| coordinate[0]} 
-        numbers = coordinates.map {|coordinate| coordinate[1]}
-
+        letters = coordinates.each {|coordinate| coordinate[0]} 
+        numbers = coordinates.each {|coordinate| coordinate[1]}
+        require 'pry'; binding.pry
         if letters.uniq.count == 1
             true
         elsif numbers.uniq.count == 1
@@ -57,7 +57,25 @@ class Board
 
     def consecutive_accumulator?(coordinates)
         numbers = coordinates.map {|coordinate| coordinate[1]}
-        numbers.each.any? {|number| number == number + 1.to_s}            
+        numbers.each.any? {|number| number == number + 1}            
     end
 
+    def coordinate_generator
+        []
+    end
+# try out each_cons.  test unit and integration tests(w/helper tests) seperately
+# make a describe for each helper method.  for organization sake
 end
+
+# def consecutive_checker?(coordinates)
+#     letters = coordinates.map {|coordinate| coordinate[0]} 
+#     numbers = coordinates.map {|coordinate| coordinate[1]}
+
+#     if letters.uniq.count == 1
+#         true
+#     elsif numbers.uniq.count == 1
+#         true
+#     else
+#         false
+#     end
+# end
