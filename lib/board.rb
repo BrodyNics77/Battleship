@@ -89,5 +89,13 @@ class Board
             !@cells[coordinate].empty?
         end
     end
+
+    def render(reveal = false)
+        "  1 2 3 4 \n" +
+        "A #{location['A1'].render(reveal)} #{location['A2'].render(reveal)} #{location['A3'].render(reveal)} #{location['A4'].render(reveal)} \n" +
+        "B #{location['B1'].render(reveal)} #{location['B2'].render(reveal)} #{location['B3'].render(reveal)} #{location['B4'].render(reveal)} \n" +
+        "C #{location['C1'].render(reveal)} #{location['C2'].render(reveal)} #{location['C3'].render(reveal)} #{location['C4'].render(reveal)} \n" +
+        "D #{location['D1'].render(reveal)} #{location['D2'].render(reveal)} #{location['D3'].render(reveal)} #{location['D4'].render(reveal)} \n"
+    end
 end
             # require'pry'; binding.pry
