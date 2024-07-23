@@ -106,13 +106,13 @@ RSpec.describe 'Board' do
             expect(@board.diagonal_checker?(["A1", "B2"])).to eq false
         end
 
-        it '#overlapping? returns true if place ship overlaps' do
+        it '#overlapping? returns true if coordinate overlaps' do
             cruiser = Ship.new("Cruiser", 3)
-            submarine = Ship.new("Submarine", 2)
-
             @board.place(cruiser, ["A1", "A2", "A3"])
 
-            expect(@board.overlapping?(submarine, ["A1", "B1"])).to be true
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.overlapping?(submarine, ["A1", "A2"])).to be true
         end
     end
 

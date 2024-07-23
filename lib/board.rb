@@ -84,16 +84,9 @@ class Board
     end
 
     def overlapping?(ship, coordinates)
-        coordinates.each do |coordinate|
-            if @cell.place_ship.empty? == true
-                true
-            else 
-                false
-            end
+        coordinates.any? do |coordinate|
+            !@cells[coordinate].empty?
         end
-        # @cells.place 
-        # ship.cells must be empty?
-        # we have .place, .empty?
     end
 end
             # require'pry'; binding.pry
