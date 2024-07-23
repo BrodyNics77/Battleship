@@ -214,18 +214,19 @@ RSpec.describe 'Board' do
     end
 
     describe '#render' do
-        it 'prints the board without revealing anything initially' do
+        it 'returns the board without revealing anything initially' do
             @board.render
 
             expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
         end
 
-        it 'reveals the game board when acted upon' do
+        it '(reveal) defaults as false. if true it reveals ships' do
             cruiser = Ship.new("Cruiser", 3)
 
             @board.place(cruiser, ["A1", "A2", "A3"])
 
             expect(@board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+            expect(@board.render(false)).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
 
         end
     end
