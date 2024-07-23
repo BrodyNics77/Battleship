@@ -81,6 +81,31 @@ RSpec.describe 'Board' do
             expect(@board.consecutive_numbers?(["A1", "A2", "A3"])).to be true
             expect(@board.consecutive_numbers?(["A1", "A2"])).to be true
         end
+
+        it '#consecutive letters tests false when lettes arent sequential' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.consecutive_letters?(["A1", "A2", "C4"])).to be false
+            expect(@board.consecutive_letters?(["A1", "C1"])).to be false
+    end
+
+        it '#consecutive letters tests true when letters are sequential' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.consecutive_letters?(["A1", "B1", "C1"])).to be true
+            expect(@board.consecutive_letters?(["A1", "B1"])).to be true
+        end
+
+        it '#diagonal checker tests false if theres diagonal placement' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.diagonal_checker?(["A1", "B2", "C3"])).to eq false
+            expect(@board.diagonal_checker?(["A1", "B2"])).to eq false
+
+        end
     end
 
     describe '#validating_placements' do

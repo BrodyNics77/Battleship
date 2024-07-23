@@ -35,6 +35,7 @@ class Board
         return false if !length_check?(ship, coordinates)
         return false if !unique_checker?(coordinates)
         return false if !consecutive_numbers?(coordinates)
+        return false if !consecutive_letters?(coordinates)
         true
     end
 
@@ -64,12 +65,18 @@ class Board
     def consecutive_letters?(coordinates)
         letters = coordinates.map {|coordinate| coordinate[0]}
         letters.each_cons(2).all? do |a, b| 
-            # require'pry'; binding.pry
             b.ord == a.ord + 1
         end
     end
 
+    def diagonal_checker?(coordinates)
+        if consecutive_letters?(coordinates) == true && consecutive_numbers?(coordinates) == true
+            false
+        end
+    end
+end
 # try out each_cons.  test unit and integration tests(w/helper tests) seperately
 # make a describe for each helper method.  for organization sake
 # what if we wanna go in the other directions
-end
+
+            # require'pry'; binding.pry
