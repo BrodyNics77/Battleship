@@ -12,11 +12,12 @@ RSpec.describe 'Game_logic' do
     end
 
     it '#initialze computer and turn' do
-        expect(@computer). to 
-        expect(@turn). to
-
+        expect(@computer). to be_an_instance_of(Computer)
+        expect(@turn). to be_an_instance_of(Turn)
 
     end
+
+    it "Describes"
 end
 
 
