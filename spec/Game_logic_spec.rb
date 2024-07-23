@@ -8,6 +8,17 @@ RSpec.configure do |config|
 
 RSpec.describe 'Game_logic' do
     before(:each) do
-        @
+        @computer = Compter.new
+    end
+
+    it '#initialze computer and turn' do
+        expect(@computer). to 
+        expect(@turn). to
+
+
     end
 end
+
+
+# Need to build a computer to play against, and maybe a turn function?
+# 
