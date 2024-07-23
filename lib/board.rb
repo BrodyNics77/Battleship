@@ -33,9 +33,10 @@ class Board
 
     def valid_placement?(ship, coordinates)
         return false if !length_check?(ship, coordinates)
-        return false if !unique_checker?(coordinates)
+        # return false if !unique_checker?(coordinates)
         return false if !consecutive_numbers?(coordinates)
-        return false if !consecutive_letters?(coordinates)
+        return false if consecutive_letters?(coordinates)
+        return false if diagonal_checker?(coordinates)
         true
     end
 

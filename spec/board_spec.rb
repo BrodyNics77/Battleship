@@ -108,24 +108,35 @@ RSpec.describe 'Board' do
         end
     end
 
-    describe '#validating_placements' do
-        xit '#valid_placement? test for false values of a ships length' do
+    describe '#valid_placements' do
+        it '#valid_placement? test for false values of a ships length' do
             cruiser = Ship.new("Cruiser", 3)
+            expect(@board.valid_placement?(cruiser, ["A1", "A2"])).to be false
+
             submarine = Ship.new("Submarine", 2)
 
-            expect(@board.valid_placement?(cruiser, ["A1", "A2"])).to be false
             expect(@board.valid_placement?(submarine, ["A2", "A3", "A4"])).to be false
         end
 
-        xit '#valid_placement? test for true values of ship length' do
+        it '#valid_placement? test for true values of ship length' do
             cruiser = Ship.new("Cruiser", 3)
-            submarine = Ship.new("Submarine", 2)
-            # require 'pry'; binding.pry
             expect(@board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to be true
+
+            submarine = Ship.new("Submarine", 2)
             expect(@board.valid_placement?(submarine, ["A2", "A3"])).to be true
         end
 
-        xit '#valid_placement? of consecutive coordinates' do
+        it 'tests for consecutive placement' do
+            cruiser = Ship.new("Cruiser", 3)
+            expect(@board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to be true
+            expect(@board.valid_placement?(cruiser, ["A1", "A2", "A4"])).to be false
+
+            submarine = Ship.new("Submarine", 2)
+            expect(@board.valid_placement?(submarine, ["A1", "A2"])).to be true
+            expect(@board.valid_placement?(submarine, ["B1", "C1"])).to be true
+
+        end
+        it '#valid_placement? of consecutive coordinates' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
@@ -133,7 +144,7 @@ RSpec.describe 'Board' do
             expect(@board.valid_placement?(submarine, ["A1", "C1"])).to be false
         end
 
-        xit '#valid_placement? of reverse coordinates' do
+        it '#valid_placement? of reverse coordinates' do
             expect(@board.valid_placement?(cruiser, ["A3", "A2", "A1"])).to be false
             expect(@board.valid_placement?(submarine, ["C1", "B1"])).to be false
         end
