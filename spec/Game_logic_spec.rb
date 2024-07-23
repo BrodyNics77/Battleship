@@ -1,5 +1,6 @@
 require './lib/ship'
 require './lib/cell'
+require './lib/board'
 require './lib/Game_logic'
 
 RSpec.configure do |config| 
@@ -17,9 +18,15 @@ RSpec.describe 'Game_logic' do
 
     end
 
-    it "Describes"
+    it "Describes a computer start" do
+
+    end
+
+    it '#computer place ship' do
+        expect(@computer). 
+    end
 end
 
 
 # Need to build a computer to play against, and maybe a turn function?
-# 
+# have some test set up, needs to be filled out
