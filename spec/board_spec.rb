@@ -63,7 +63,7 @@ RSpec.describe 'Board' do
             expect(@board.unique_checker?(["A1", "A2", "A3"])).to be true
             expect(@board.unique_checker?(["A1", "A2"])).to be true
             expect(@board.unique_checker?(["B1", "C1"])).to be true
-            expect(@board.unique_checker?(["A1", "A2", "A4"])).to be true
+            expect(@board.unique_checker?(["A1", "A2", "A4"])).to be false
         end
 
         it '#consecutive numbers tests false when number isnt sequential' do
@@ -136,7 +136,7 @@ RSpec.describe 'Board' do
             expect(@board.valid_placement?(submarine, ["B1", "C1"])).to be true
 
         end
-        it '#valid_placement? of consecutive coordinates' do
+        it 'tests for false consecutive coordinates' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
@@ -145,19 +145,22 @@ RSpec.describe 'Board' do
         end
 
         it '#valid_placement? of reverse coordinates' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
             expect(@board.valid_placement?(cruiser, ["A3", "A2", "A1"])).to be false
             expect(@board.valid_placement?(submarine, ["C1", "B1"])).to be false
         end
 
-        xit '#valid_placement? coordinates cannot go diagonal' do
+        it '#valid_placement? coordinates cannot go diagonal' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
-            expect(@board.valid_placement?(cruiser, ["A1", "B2", "C4"])).to be false
+            expect(@board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to be false
             expect(@board.valid_placement?(submarine, ["C2", "D3"])).to be false
         end
 
-        xit '#valid_placement? should be true' do
+        it '#valid_placement? should be true' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 

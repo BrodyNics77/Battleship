@@ -33,9 +33,7 @@ class Board
 
     def valid_placement?(ship, coordinates)
         return false if !length_check?(ship, coordinates)
-        # return false if !unique_checker?(coordinates)
-        return false if !consecutive_numbers?(coordinates)
-        return false if consecutive_letters?(coordinates)
+        return false if !unique_checker?(coordinates)
         return false if diagonal_checker?(coordinates)
         true
     end
@@ -48,9 +46,9 @@ class Board
         letters = coordinates.map {|coordinate| coordinate[0]} 
         numbers = coordinates.map {|coordinate| coordinate[1]}
         if letters.uniq.count == 1
-            true
+            consecutive_numbers?(coordinates)
         elsif numbers.uniq.count == 1
-            true
+            consecutive_letters?(coordinates)
         else
             false
         end
