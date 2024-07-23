@@ -16,9 +16,10 @@ class Game_logic
 
     end
 
-    
+
 
 end
 
 
 # In testing building stage
+

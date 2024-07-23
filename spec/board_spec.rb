@@ -63,7 +63,7 @@ RSpec.describe 'Board' do
             expect(@board.unique_checker?(["A1", "A2", "A3"])).to be true
             expect(@board.unique_checker?(["A1", "A2"])).to be true
             expect(@board.unique_checker?(["B1", "C1"])).to be true
-            expect(@board.unique_checker?(["A1", "A2", "A4"])).to be true
+            expect(@board.unique_checker?(["A1", "A2", "A4"])).to be false
         end
 
         it '#consecutive numbers tests false when number isnt sequential' do
@@ -81,26 +81,70 @@ RSpec.describe 'Board' do
             expect(@board.consecutive_numbers?(["A1", "A2", "A3"])).to be true
             expect(@board.consecutive_numbers?(["A1", "A2"])).to be true
         end
-    end
 
-    describe '#validating_placements' do
-        xit '#valid_placement? test for false values of a ships length' do
+        it '#consecutive letters tests false when lettes arent sequential' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
+            expect(@board.consecutive_letters?(["A1", "A2", "C4"])).to be false
+            expect(@board.consecutive_letters?(["A1", "C1"])).to be false
+    end
+
+        it '#consecutive letters tests true when letters are sequential' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.consecutive_letters?(["A1", "B1", "C1"])).to be true
+            expect(@board.consecutive_letters?(["A1", "B1"])).to be true
+        end
+
+        it '#diagonal checker tests false if theres diagonal placement' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.diagonal_checker?(["A1", "B2", "C3"])).to eq false
+            expect(@board.diagonal_checker?(["A1", "B2"])).to eq false
+        end
+
+        it '#overlapping? returns true if place ship overlaps' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+
+            expect(@board.overlapping?(submarine, ["A1", "B1"])).to be true
+        end
+    end
+
+    describe '#valid_placements' do
+        it '#valid_placement? test for false values of a ships length' do
+            cruiser = Ship.new("Cruiser", 3)
             expect(@board.valid_placement?(cruiser, ["A1", "A2"])).to be false
+
+            submarine = Ship.new("Submarine", 2)
+
             expect(@board.valid_placement?(submarine, ["A2", "A3", "A4"])).to be false
         end
 
-        xit '#valid_placement? test for true values of ship length' do
+        it '#valid_placement? test for true values of ship length' do
             cruiser = Ship.new("Cruiser", 3)
-            submarine = Ship.new("Submarine", 2)
-            # require 'pry'; binding.pry
             expect(@board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to be true
+
+            submarine = Ship.new("Submarine", 2)
             expect(@board.valid_placement?(submarine, ["A2", "A3"])).to be true
         end
 
-        xit '#valid_placement? of consecutive coordinates' do
+        it 'tests for consecutive placement' do
+            cruiser = Ship.new("Cruiser", 3)
+            expect(@board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to be true
+            expect(@board.valid_placement?(cruiser, ["A1", "A2", "A4"])).to be false
+
+            submarine = Ship.new("Submarine", 2)
+            expect(@board.valid_placement?(submarine, ["A1", "A2"])).to be true
+            expect(@board.valid_placement?(submarine, ["B1", "C1"])).to be true
+
+        end
+        it 'tests for false consecutive coordinates' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
@@ -108,20 +152,23 @@ RSpec.describe 'Board' do
             expect(@board.valid_placement?(submarine, ["A1", "C1"])).to be false
         end
 
-        xit '#valid_placement? of reverse coordinates' do
+        it '#valid_placement? of reverse coordinates' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
             expect(@board.valid_placement?(cruiser, ["A3", "A2", "A1"])).to be false
             expect(@board.valid_placement?(submarine, ["C1", "B1"])).to be false
         end
 
-        xit '#valid_placement? coordinates cannot go diagonal' do
+        it '#valid_placement? coordinates cannot go diagonal' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
-            expect(@board.valid_placement?(cruiser, ["A1", "B2", "C4"])).to be false
+            expect(@board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to be false
             expect(@board.valid_placement?(submarine, ["C2", "D3"])).to be false
         end
 
-        xit '#valid_placement? should be true' do
+        it '#valid_placement? should be true' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
@@ -131,32 +178,34 @@ RSpec.describe 'Board' do
     end
 
     describe 'placing ships' do
-        xit '#place ship on coordinates' do
+        it '#place ship on coordinate array' do
             cruiser = Ship.new("Cruiser", 3)
-            board.place(cruiser, ["A1", "A2", "A3"])
+            @board.place(cruiser, ["A1", "A2", "A3"])
 
-            cell_1 = board.cells["A1"]
-            cell_2 = board.cells["A2"]
-            cell_3 = board.cells["A3"]
+            cell_1 = @board.cells["A1"]
+            cell_2 = @board.cells["A2"]
+            cell_3 = @board.cells["A3"]
 
             cell_1.ship
             cell_2.ship
             cell_3.ship
 
-            expect(cell_3.ship == cell_2.ship).to be true
+            expect(cell_3.ship).to eq(cruiser)
+            expect(cell_1.ship == cell_3.ship).to be true
         end
 
         xit '#valid_placement? ships cannot overlap' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
-            board.place(cruiser, ["A1", "A2", "A3"])
+            @board.place(cruiser, ["A1", "A2", "A3"])
 
             expect(@board.valid_placement?(submarine, ["A1", "B1"])).to be false
         end
     end
 
 end
-# The Board class is responsible for keeping track of cells, 
-# validating coordinates, validating ship placements, placing ships, 
-# and rendering a visual representation of itself.
+# Placing Ships
+# The board should be able to place a ship in its cells. Because a Ship occupies more than one cell, 
+# multiple Cells will contain the same ship. This is a little brain bendy at first, 
+# but it is a very important concept. This is Object Oriented Programming in a nutshell.

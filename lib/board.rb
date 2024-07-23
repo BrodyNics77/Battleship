@@ -26,6 +26,15 @@ class Board
             "D4" => Cell.new('D4')
         }
     end
+# an enumerable can possibly help #place, by celling @cells/locations and putting in coordinates
+# or
+# were taking a number of coordintes, looking at 
+    def place(ship, coordinates)
+    return false if !valid_placement?(ship, coordinates)
+        coordinates.each do |coordinate|
+            @cells[coordinate].place_ship(ship)
+        end
+    end
 
     def valid_coordinate?(coordinate)
         @cells.key?(coordinate)
@@ -34,7 +43,7 @@ class Board
     def valid_placement?(ship, coordinates)
         return false if !length_check?(ship, coordinates)
         return false if !unique_checker?(coordinates)
-        return false if !consecutive_numbers?(coordinates)
+        return false if diagonal_checker?(coordinates)
         true
     end
 
@@ -46,9 +55,9 @@ class Board
         letters = coordinates.map {|coordinate| coordinate[0]} 
         numbers = coordinates.map {|coordinate| coordinate[1]}
         if letters.uniq.count == 1
-            true
+            consecutive_numbers?(coordinates)
         elsif numbers.uniq.count == 1
-            true
+            consecutive_letters?(coordinates)
         else
             false
         end
@@ -64,12 +73,27 @@ class Board
     def consecutive_letters?(coordinates)
         letters = coordinates.map {|coordinate| coordinate[0]}
         letters.each_cons(2).all? do |a, b| 
-            # require'pry'; binding.pry
             b.ord == a.ord + 1
         end
     end
 
-# try out each_cons.  test unit and integration tests(w/helper tests) seperately
-# make a describe for each helper method.  for organization sake
-# what if we wanna go in the other directions
+    def diagonal_checker?(coordinates)
+        if consecutive_letters?(coordinates) == true && consecutive_numbers?(coordinates) == true
+            false
+        end
+    end
+
+    def overlapping?(ship, coordinates)
+        coordinates.each do |coordinate|
+            if @cell.place_ship.empty? == true
+                true
+            else 
+                false
+            end
+        end
+        # @cells.place 
+        # ship.cells must be empty?
+        # we have .place, .empty?
+    end
 end
+            # require'pry'; binding.pry
