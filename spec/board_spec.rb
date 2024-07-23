@@ -104,7 +104,15 @@ RSpec.describe 'Board' do
 
             expect(@board.diagonal_checker?(["A1", "B2", "C3"])).to eq false
             expect(@board.diagonal_checker?(["A1", "B2"])).to eq false
+        end
 
+        it '#overlapping? returns true if place ship overlaps' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+
+            expect(@board.overlapping?(submarine, ["A1", "B1"])).to be true
         end
     end
 
@@ -170,32 +178,34 @@ RSpec.describe 'Board' do
     end
 
     describe 'placing ships' do
-        xit '#place ship on coordinates' do
+        it '#place ship on coordinate array' do
             cruiser = Ship.new("Cruiser", 3)
-            board.place(cruiser, ["A1", "A2", "A3"])
+            @board.place(cruiser, ["A1", "A2", "A3"])
 
-            cell_1 = board.cells["A1"]
-            cell_2 = board.cells["A2"]
-            cell_3 = board.cells["A3"]
+            cell_1 = @board.cells["A1"]
+            cell_2 = @board.cells["A2"]
+            cell_3 = @board.cells["A3"]
 
             cell_1.ship
             cell_2.ship
             cell_3.ship
 
-            expect(cell_3.ship == cell_2.ship).to be true
+            expect(cell_3.ship).to eq(cruiser)
+            expect(cell_1.ship == cell_3.ship).to be true
         end
 
         xit '#valid_placement? ships cannot overlap' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
-            board.place(cruiser, ["A1", "A2", "A3"])
+            @board.place(cruiser, ["A1", "A2", "A3"])
 
             expect(@board.valid_placement?(submarine, ["A1", "B1"])).to be false
         end
     end
 
 end
-# The Board class is responsible for keeping track of cells, 
-# validating coordinates, validating ship placements, placing ships, 
-# and rendering a visual representation of itself.
+# Placing Ships
+# The board should be able to place a ship in its cells. Because a Ship occupies more than one cell, 
+# multiple Cells will contain the same ship. This is a little brain bendy at first, 
+# but it is a very important concept. This is Object Oriented Programming in a nutshell.

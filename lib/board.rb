@@ -26,6 +26,15 @@ class Board
             "D4" => Cell.new('D4')
         }
     end
+# an enumerable can possibly help #place, by celling @cells/locations and putting in coordinates
+# or
+# were taking a number of coordintes, looking at 
+    def place(ship, coordinates)
+    return false if !valid_placement?(ship, coordinates)
+        coordinates.each do |coordinate|
+            @cells[coordinate].place_ship(ship)
+        end
+    end
 
     def valid_coordinate?(coordinate)
         @cells.key?(coordinate)
@@ -73,9 +82,18 @@ class Board
             false
         end
     end
-end
-# try out each_cons.  test unit and integration tests(w/helper tests) seperately
-# make a describe for each helper method.  for organization sake
-# what if we wanna go in the other directions
 
+    def overlapping?(ship, coordinates)
+        coordinates.each do |coordinate|
+            if @cell.place_ship.empty? == true
+                true
+            else 
+                false
+            end
+        end
+        # @cells.place 
+        # ship.cells must be empty?
+        # we have .place, .empty?
+    end
+end
             # require'pry'; binding.pry
