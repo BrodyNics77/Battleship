@@ -30,31 +30,29 @@ class Cell
 
     def fired_upon?
         if @ship.health == @ship.length
-            false
+        false
         else true
-
         end
     end
 
     def render(reveal = false)
-       if reveal == true
+        default = "."
+        if reveal == true  && @hit == false && empty? == false
             return "S"
         end
+
         if @hit == false
-        return "."
-        elsif place_ship(@ship)
-        @ship.hit == true && ship.sunk == true
-            "X"
-        elsif place_ship(@ship) 
-            @ship.hit == true
-            return "H"
-      #  elsif place_ship(@ship)
-       #     @ship.hit == true && ship.sunk == true
-          #  @ship.sunk == true
-            #return "X"
-        else
-        return "M"
+            return default
+
+        elsif @ship
+            if @ship.sunk? == true
+                return "X"
+            else
+                return "H"
+            end
+            
+        else 
+            return "M"
         end
     end
 end
-# ^change later^
