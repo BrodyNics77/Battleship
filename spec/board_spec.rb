@@ -194,7 +194,7 @@ RSpec.describe 'Board' do
             expect(cell_1.ship == cell_3.ship).to be true
         end
 
-        xit '#valid_placement? ships cannot overlap' do
+        it '#valid_placement? false if ships overlap' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
@@ -202,10 +202,15 @@ RSpec.describe 'Board' do
 
             expect(@board.valid_placement?(submarine, ["A1", "B1"])).to be false
         end
+
+        it '#valid_placement? true if ships dont overlap' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+
+            expect(@board.valid_placement?(submarine, ["B1", "B2"])).to be true
+        end
     end
 
 end
-# Placing Ships
-# The board should be able to place a ship in its cells. Because a Ship occupies more than one cell, 
-# multiple Cells will contain the same ship. This is a little brain bendy at first, 
-# but it is a very important concept. This is Object Oriented Programming in a nutshell.

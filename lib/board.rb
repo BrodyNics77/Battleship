@@ -44,6 +44,7 @@ class Board
         return false if !length_check?(ship, coordinates)
         return false if !unique_checker?(coordinates)
         return false if diagonal_checker?(coordinates)
+        return false if overlapping?(ship, coordinates)
         true
     end
 
