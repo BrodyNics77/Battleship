@@ -213,4 +213,59 @@ RSpec.describe 'Board' do
         end
     end
 
+    describe '#render' do
+        it 'returns the board without revealing anything initially' do
+            @board.render
+
+            expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+        end
+
+        it '(reveal) defaults as false. if true it reveals ships (S)' do
+            cruiser = Ship.new("Cruiser", 3)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+
+            expect(@board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+            expect(@board.render(false)).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+        end
+
+        it 'displays ship hits (H) and misses (M) correctly' do
+            cruiser = Ship.new("Cruiser", 3)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+
+            cell_1 = @board.cells["A1"]
+            cell_2 = @board.cells["A2"]
+            cell_3 = @board.cells["A3"]
+
+            cell_2.fire_upon
+
+            expect(@board.render).to eq("  1 2 3 4 \nA . H . . \nB . . . . \nC . . . . \nD . . . . \n")
+            expect(@board.render(true)).to eq("  1 2 3 4 \nA S H S . \nB . . . . \nC . . . . \nD . . . . \n")
+
+        end
+
+        it 'displays sunk ships (X) correctly' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+            @board.place(submarine, ["C3", "C4"])
+
+            cell_1 = @board.cells["A1"]
+            cell_2 = @board.cells["A2"]
+            cell_3 = @board.cells["A3"]
+            cell_4 = @board.cells["C3"]
+            cell_5 = @board.cells["C4"]
+
+            cell_1.fire_upon
+            cell_2.fire_upon
+            cell_3.fire_upon
+            cell_4.fire_upon
+
+            expect(@board.render).to eq("  1 2 3 4 \nA X X X . \nB . . . . \nC . . H . \nD . . . . \n")
+            expect(@board.render(true)).to eq("  1 2 3 4 \nA X X X . \nB . . . . \nC . . H S \nD . . . . \n")
+        end
+    end
+
 end

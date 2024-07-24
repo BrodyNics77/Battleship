@@ -37,7 +37,7 @@ class Cell
 
     def render(reveal = false)
         default = "."
-        if reveal == true  && @hit == false && empty? == false
+        if reveal == true && @hit == false && empty? == false
             return "S"
         end
 
