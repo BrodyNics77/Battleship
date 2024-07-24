@@ -1,24 +1,29 @@
-class Game
-    def start
-      puts ship_art
-      answer = ""
-      
-        puts "\n------------------------------------------------"
-        puts "         Enter p to play. Enter q to quit."
-        puts "------------------------------------------------"
+class Art
+    # def start
+    #   puts ship_art
+    #   answer = ""
+    #   puts
+    #     puts "\n------------------------------------------------"
+    #     puts "         Welcome to Battleship Royale!"
+    #     puts "------------------------------------------------"
+
+    #     puts "\n------------------------------------------------"
+    #     puts "         Enter p to play. Enter q to quit."
+    #     puts "------------------------------------------------"
 
   
-      answer = gets.chomp.downcase
-      case answer
-      when 'p'
-        puts "Starting game..."
-        # Add game start logic here
-      when 'q'
-        puts "Quitting game. Goodbye!"
-      else
-        puts "Invalid input. Please enter 'p' to play or 'q' to quit."
-      end
-    end
+    #   answer = gets.chomp.downcase
+    #   case answer
+    #   when 'p'
+    #     puts "Starting game..."
+        
+    #     # Add game start logic here
+    #   when 'q'
+    #     puts "Quitting game. Goodbye!"
+    #   else
+    #     puts "Invalid input. Please enter 'p' to play or 'q' to quit."
+    #   end
+    # end
   
     def ship_art
       <<-'EOF'
