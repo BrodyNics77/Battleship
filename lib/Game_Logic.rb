@@ -5,17 +5,13 @@ class Game_logic
     def initialize(computer)
         @computer = computer
         @turn = 0
-        @ship = [
-            Ship.new('Cruiser, 3')
-            Ship.new('Submarine, 3')
-        ]
     end
 
     def computer
         place_ships
     end
 
-    def computer_place(ship, coordintes, cell)
+    def computer_place(ship, coordintes)
         ship = @computer.place_ships
         ships.each do |ship|
             placed = false
@@ -58,21 +54,3 @@ class Game_logic
         end
     end
 end
-
-#crazy script my friends told me, idk how to test or fully how it works
-#def computer_place(ship, coordintes, cell)
-# ship = @computer.place_ships
-#ships.each do |ship|
- #   placed = false
-  #  until placed
-   #     coordintes = generate_random_coordinates(ship.length)
-    #    if board.valid_placement?(ship, coordnitates)
-    #      board.place(ship, coordinates)
-    #      place = true
-         #end
-        #end
-    #end
-# end
-# end
-# In testing building stage
-
