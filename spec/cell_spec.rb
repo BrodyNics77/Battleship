@@ -1,5 +1,6 @@
 require './lib/ship'
 require './lib/cell'
+require './lib/board'
 
 RSpec.configure do |config| 
     config.formatter = :documentation
@@ -20,7 +21,7 @@ RSpec.describe 'Cell' do
 
     describe 'ship on a cell' do
         it 'returns nil by default' do
-        expect(@cell.ship).to eq nil
+            expect(@cell.ship).to eq nil
         end
 
         it '#empty? when nil' do
@@ -71,7 +72,7 @@ RSpec.describe 'Cell' do
 
             expect(@cell_1.render).to eq(".")
         end
-        it 'displays m when there is a missed' do
+        it 'displays m when cell has no ship and is fired upon' do
             @cell_1 = Cell.new("B4")
             
             @cell_1.fire_upon

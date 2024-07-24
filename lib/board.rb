@@ -26,9 +26,7 @@ class Board
             "D4" => Cell.new('D4')
         }
     end
-# an enumerable can possibly help #place, by celling @cells/locations and putting in coordinates
-# or
-# were taking a number of coordintes, looking at 
+    
     def place(ship, coordinates)
     return false if !valid_placement?(ship, coordinates)
         coordinates.each do |coordinate|
@@ -44,6 +42,7 @@ class Board
         return false if !length_check?(ship, coordinates)
         return false if !unique_checker?(coordinates)
         return false if diagonal_checker?(coordinates)
+        return false if overlapping?(ship, coordinates)
         true
     end
 
@@ -84,16 +83,17 @@ class Board
     end
 
     def overlapping?(ship, coordinates)
-        coordinates.each do |coordinate|
-            if @cell.place_ship.empty? == true
-                true
-            else 
-                false
-            end
+        coordinates.any? do |coordinate|
+            !@cells[coordinate].empty?
         end
-        # @cells.place 
-        # ship.cells must be empty?
-        # we have .place, .empty?
+    end
+
+    def render(reveal = false)
+        "  1 2 3 4 \n" +
+        "A #{@cells['A1'].render(reveal)} #{@cells['A2'].render(reveal)} #{@cells['A3'].render(reveal)} #{@cells['A4'].render(reveal)} \n" +
+        "B #{@cells['B1'].render(reveal)} #{@cells['B2'].render(reveal)} #{@cells['B3'].render(reveal)} #{@cells['B4'].render(reveal)} \n" +
+        "C #{@cells['C1'].render(reveal)} #{@cells['C2'].render(reveal)} #{@cells['C3'].render(reveal)} #{@cells['C4'].render(reveal)} \n" +
+        "D #{@cells['D1'].render(reveal)} #{@cells['D2'].render(reveal)} #{@cells['D3'].render(reveal)} #{@cells['D4'].render(reveal)} \n"
     end
 end
             # require'pry'; binding.pry

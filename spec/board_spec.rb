@@ -106,13 +106,13 @@ RSpec.describe 'Board' do
             expect(@board.diagonal_checker?(["A1", "B2"])).to eq false
         end
 
-        it '#overlapping? returns true if place ship overlaps' do
+        it '#overlapping? returns true if coordinate overlaps' do
             cruiser = Ship.new("Cruiser", 3)
-            submarine = Ship.new("Submarine", 2)
-
             @board.place(cruiser, ["A1", "A2", "A3"])
 
-            expect(@board.overlapping?(submarine, ["A1", "B1"])).to be true
+            submarine = Ship.new("Submarine", 2)
+
+            expect(@board.overlapping?(submarine, ["A1", "A2"])).to be true
         end
     end
 
@@ -194,7 +194,7 @@ RSpec.describe 'Board' do
             expect(cell_1.ship == cell_3.ship).to be true
         end
 
-        xit '#valid_placement? ships cannot overlap' do
+        it '#valid_placement? false if ships overlap' do
             cruiser = Ship.new("Cruiser", 3)
             submarine = Ship.new("Submarine", 2)
 
@@ -202,10 +202,70 @@ RSpec.describe 'Board' do
 
             expect(@board.valid_placement?(submarine, ["A1", "B1"])).to be false
         end
+
+        it '#valid_placement? true if ships dont overlap' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+
+            expect(@board.valid_placement?(submarine, ["B1", "B2"])).to be true
+        end
+    end
+
+    describe '#render' do
+        it 'returns the board without revealing anything initially' do
+            @board.render
+
+            expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+        end
+
+        it '(reveal) defaults as false. if true it reveals ships (S)' do
+            cruiser = Ship.new("Cruiser", 3)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+
+            expect(@board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+            expect(@board.render(false)).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+        end
+
+        it 'displays ship hits (H) and misses (M) correctly' do
+            cruiser = Ship.new("Cruiser", 3)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+
+            cell_1 = @board.cells["A1"]
+            cell_2 = @board.cells["A2"]
+            cell_3 = @board.cells["A3"]
+
+            cell_2.fire_upon
+
+            expect(@board.render).to eq("  1 2 3 4 \nA . H . . \nB . . . . \nC . . . . \nD . . . . \n")
+            expect(@board.render(true)).to eq("  1 2 3 4 \nA S H S . \nB . . . . \nC . . . . \nD . . . . \n")
+
+        end
+
+        it 'displays sunk ships (X) correctly' do
+            cruiser = Ship.new("Cruiser", 3)
+            submarine = Ship.new("Submarine", 2)
+
+            @board.place(cruiser, ["A1", "A2", "A3"])
+            @board.place(submarine, ["C3", "C4"])
+
+            cell_1 = @board.cells["A1"]
+            cell_2 = @board.cells["A2"]
+            cell_3 = @board.cells["A3"]
+            cell_4 = @board.cells["C3"]
+            cell_5 = @board.cells["C4"]
+
+            cell_1.fire_upon
+            cell_2.fire_upon
+            cell_3.fire_upon
+            cell_4.fire_upon
+
+            expect(@board.render).to eq("  1 2 3 4 \nA X X X . \nB . . . . \nC . . H . \nD . . . . \n")
+            expect(@board.render(true)).to eq("  1 2 3 4 \nA X X X . \nB . . . . \nC . . H S \nD . . . . \n")
+        end
     end
 
 end
-# Placing Ships
-# The board should be able to place a ship in its cells. Because a Ship occupies more than one cell, 
-# multiple Cells will contain the same ship. This is a little brain bendy at first, 
-# but it is a very important concept. This is Object Oriented Programming in a nutshell.
