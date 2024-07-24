@@ -19,7 +19,7 @@ RSpec.describe 'Game_logic' do
     end
 
     it "Describes a computer start" do
-
+        expect
     end
 
     it '#computer place ship' do
