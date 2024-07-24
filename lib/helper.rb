@@ -1,5 +1,4 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-
-board = Board.new
+require './lib/Game_Logic'
