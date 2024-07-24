@@ -9,21 +9,60 @@ RSpec.configure do |config|
 
 RSpec.describe 'Game_logic' do
     before(:each) do
-        @computer = Compter.new
+        @Game_logic = Game_logic.new
     end
 
-    it '#initialze computer and turn' do
-        expect(@computer). to be_an_instance_of(Computer)
-        expect(@turn). to be_an_instance_of(Turn)
+    describe "#initialize" do
+        it '#initialze with a board and turn set to 0' do
+            expect(@Game_logic.boar). to be_an_instance_of(Board)
+            expect(@Game_logic.turn). to eq (0)
+        end
 
+        it 'Describes with a set of a ships' do
+            expect(@Game_logic.ship.size). to eq (5)
+            expect(@Game_logic.ships). to all (be_an_instance_of(Ship))
+        end
     end
 
-    it "Describes a computer start" do
-        expect
+    describe '#computer place_ships' do
+        it 'place ships on the board' do
+            allow(@Game_logic).to receive(:generate_random_coordinates).and_return(['A1, A2'])
+            allow(@Game_logic.board).to receive(:valid_placement).and_return(true)
+
+            expect(@Game_logic). to receive(:place).excatly(@Game_logic.ship.size).times
+            game_logic.place_ship
+        end
     end
 
-    it '#computer place ship' do
-        expect(@computer). 
+    describe '#computer_turn' do
+        let(opponent_board) {Board.new}
+
+        it 'fires at enemy board' do
+            allow(Game_logic).to receive(:generate_random_shot).and_return("A1")
+
+            expect(opponent_board.cell["A1"]).to receive(:fire_upon)
+            game_logic.computer_turn(opponent_board)
+        end
+    end
+    describe '#generate_random_coordinates' do
+         it 'generates valid random coordinates' do
+            coordinates = game_logic.send(:generate_random_coordinates, 2)
+
+            expect(coordinates.size).to eq(2)
+            expect(coordinates).to all(be_a(String))
+            expect(coordinates).to all(match(/^[A-D][1-4]$/))
+    end
+  end
+
+    describe '#generate_random_shot' do
+        let (:opponent_board) {Board.new}
+
+         it 'generates valid random shot coordinates' do
+              coordinate = game_logic.send(generate_random_coordinates, opponent_board)
+            
+              expect(coordinate).to be_a(String)
+              expect(coordinate).to match(/^[A-D][1-4]$/)
+         end
     end
 end
 
