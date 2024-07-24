@@ -1,157 +1,38 @@
 # Battleship
+In your README reflect on the following:
 
-Iteration 1 - Ships and Cells
-Back to Battleship Home Back to Requirements
+Iteration 3 did not provide an interaction pattern. How did you approach designing this iteration? Created a runner then attempted game logic.  Attempted to follow functionality checklist.
 
-Test Driven Development
-In this iteration, you are required to use TDD to create your classes. Use the interaction pattern to determine what a method should do and write one or more tests to verify that expected behavior. Then you can implement the method. You should always write code with the purpose of making a test pass.
+<!-- If you did not get to Iteration 3, reflect on how you think you would’ve approached the design and problem solving process. -->
 
-Ship
-A Ship object will represent a single ship on the board. It will be able to keep track of how much health it has, take hits, and report if it is sunk or not. A ship should start off with health equal to it’s length.
+If you had one more day to work on this project, what would you work on? The setup of computer placing ships. Interaction between user input and shots fired.
 
-The Ship class should follow this interaction pattern:
+Describe the pairing techniques you used while working on this project. Mostly Driver/Passenger.  45 minutes worth of ping ponging.
 
-pry(main)> require './lib/ship'
-#=> true
+Describe how feedback was shared over the course of this project. On zoom we would talk and attempt to plan our next moves.  Slack sharing of code.
 
-pry(main)> cruiser = Ship.new("Cruiser", 3)
-#=> #<Ship:0x00007feb05112d10...>
+Presentation points:
+[ ] Demonstration of functional completeness
 
-pry(main)> cruiser.name
-#=> "Cruiser"
+Run your runner file, and demonstrate how the game is played in the terminal. If you’ve considered edge cases, make sure you demonstrate that functionality in your demo.
 
-pry(main)> cruiser.length
-#=> 3
+[ ] Technical quality and organization of the code
 
-pry(main)> cruiser.health
-#=> 3
+At a high level (not line by line), describe how you broke out this game. What classes did you create? What is the responsibility of each class? Why did you choose to design your code in this way?
+Is there a design decision that you made that you’re particularly proud of?
 
-pry(main)> cruiser.sunk?
-#=> false
+[ ] Identifying code that should be refactored and how it would be refactored
 
-pry(main)> cruiser.hit
+Identify a piece of code that you’d like to refactor. How would you update that code?
+Are there any parts of your code that you’re unsure/hesitant about? Why?
 
-pry(main)> cruiser.health
-#=> 2
+[ ] Discussion of test coverage
 
-pry(main)> cruiser.hit
+Show examples of a unit and an integration test that you wrote.
+Run your test suite and open coverage report (if you were able to implement simplecov)
 
-pry(main)> cruiser.health
-#=> 1
+[ ] Discussion of Pairing/version control
 
-pry(main)> cruiser.sunk?
-#=> false
-
-pry(main)> cruiser.hit
-
-pry(main)> cruiser.sunk?
-#=> true
-Cell
-A Cell object is a single cell on our board. A Cell can either contain a Ship or nothing.
-
-pry(main)> require './lib/ship'
-# => true
-
-pry(main)> require './lib/cell'
-# => true
-
-pry(main)> cell = Cell.new("B4")
-# => #<Cell:0x00007f84f0ad4720...>
-
-pry(main)> cell.coordinate
-# => "B4"
-
-pry(main)> cell.ship
-# => nil
-
-pry(main)> cell.empty?
-# => true
-
-pry(main)> cruiser = Ship.new("Cruiser", 3)
-# => #<Ship:0x00007f84f0891238...>
-
-pry(main)> cell.place_ship(cruiser)
-
-pry(main)> cell.ship
-# => #<Ship:0x00007f84f0891238...>
-
-pry(main)> cell.empty?
-# => false
-Additionally, a cell knows when it has been fired upon. When it is fired upon, the cell’s ship should be damaged if it has one:
-
-pry(main)> require './lib/ship'
-# => true
-
-pry(main)> require './lib/cell'
-# => true
-
-pry(main)> cell = Cell.new("B4")
-# => #<Cell:0x00007f84f0ad4720...>
-
-pry(main)> cruiser = Ship.new("Cruiser", 3)
-# => #<Ship:0x00007f84f0891238...>
-
-pry(main)> cell.place_ship(cruiser)
-
-pry(main)> cell.fired_upon?
-# => false
-
-pry(main)> cell.fire_upon
-
-pry(main)> cell.ship.health
-# => 2
-
-pry(main)> cell.fired_upon?
-# => true
-Finally, a Cell will have a method called render which returns a String representation of the Cell for when we need to print the board. A cell can potentially be rendered as:
-
-”.” if the cell has not been fired upon.
-“M” if the cell has been fired upon and it does not contain a ship (the shot was a miss).
-“H” if the cell has been fired upon and it contains a ship (the shot was a hit).
-“X” if the cell has been fired upon and its ship has been sunk.
-Additionally, we will include an optional boolean argument to indicate if we want to reveal a ship in the cell even if it has not been fired upon. This should render a cell that has not been fired upon and contains a ship as an “S”. This will be useful for showing the user where they placed their ships and for debugging.
-
-pry(main)> cell_1 = Cell.new("B4")
-# => #<Cell:0x00007f84f11df920...>
-
-pry(main)> cell_1.render
-# => "."
-
-pry(main)> cell_1.fire_upon
-
-pry(main)> cell_1.render
-# => "M"
-
-pry(main)> cell_2 = Cell.new("C3")
-# => #<Cell:0x00007f84f0b29d10...>
-
-pry(main)> cruiser = Ship.new("Cruiser", 3)
-# => #<Ship:0x00007f84f0ad4fb8...>
-
-pry(main)> cell_2.place_ship(cruiser)
-
-pry(main)> cell_2.render
-# => "."
-
-# Indicate that we want to show a ship with the optional argument
-pry(main)> cell_2.render(true)
-# => "S"
-
-pry(main)> cell_2.fire_upon
-
-pry(main)> cell_2.render
-# => "H"
-
-pry(main)> cruiser.sunk?
-# => false
-
-pry(main)> cruiser.hit
-
-pry(main)> cruiser.hit
-
-pry(main)> cruiser.sunk?
-# => true
-
-pry(main)> cell_2.render
-# => "X"
-
+How did you all work together? Did you use a particular pairing technique?
+Walk us through your GitHub insights. How many pull requests did you make? How many commits did you make?
+Can you identify a PR that was made that demonstrates good commenting/partner review workflow?

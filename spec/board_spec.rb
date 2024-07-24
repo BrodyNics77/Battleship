@@ -29,7 +29,7 @@ RSpec.describe 'Board' do
             expect(@board.valid_coordinate?("A5")).to be false
             expect(@board.valid_coordinate?("E1")).to be false
             expect(@board.valid_coordinate?("A22")).to be false
-        end        
+        end  
     end
 
     describe '#helper methods' do
