@@ -1,4 +1,4 @@
-require './lib/game'
+require './lib/computer'
 
-game = Game.new
-game.start
+computer = Computer.new
+computer.start
