@@ -1,10 +1,10 @@
 class Game_logic
 
-    attr_reader :computer :turn
+    attr_reader :computer, :turn
 
     def initialize(computer)
-        @computer =
-        @turn =
+        @computer = computer
+        @turn = 0
 
     end
 

@@ -1,20 +1,24 @@
 require './lib/helper'
 
-cruiser = Ship.new("Cruiser", 3)
-submarine = Ship.new("Submarine", 2)
+# cruiser = Ship.new("Cruiser", 3)
+# submarine = Ship.new("Submarine", 2)
 
-ships=(cruiser, submarine)
+# ships=(cruiser, submarine)
 
-cell = Cell.new
+# cell = Cell.new
 
-board = Board.new
+# board = Board.new
 
-def start
-    
-    p "Welcome to BATTLESHIP"
-    puts "---------------------"
-    p "\nEnter p to play. Enter q to quit"
-    answer = gets.chomp().downcase
+puts
+puts "\n------------------------------------------------"
+puts "         Welcome to Battleship Royale!"
+puts "------------------------------------------------"
+
+
+game = Game.new
+game.start
+
+# answer = gets.chomp.downcase
 
 
     # def start(deck)
